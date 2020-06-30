@@ -65,3 +65,30 @@ index.html
     }
 
     countStore.subscribe(onChange);
+
+    
+<br>
+-----
+# 주의사항
+
+reducer에서의 state 변경
+
+1. 항상 새로운 state를 create하고 그 새로운 state를 return한다.
+
+2. 절대 old state의 값을 리턴하면 안된다.  
+예) return state.push(action.text);
+
+-----
+
+    const reducer = (state = [], action) => {
+      console.log(action);
+
+      switch (action.type) {
+        case ADD_TODO:
+          return [...state, { text: action.text, id: Date.now() }];  // 삭제를 위해 id 값도 추가했다.
+       // return [{ text: action.text, id: Date.now() }, ...state];  // 참고: 이렇게 할 경우 최근에 입력된 값이 최상단에 올라간다
+
+        default:
+          return state;
+      }
+    };
