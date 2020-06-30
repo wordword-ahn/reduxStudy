@@ -20,7 +20,7 @@ const addToDo = (text) => {
 
 // 삭제 버튼 누르면 발동되는 이벤트
 const dispatchDeleteToDo = (e) => { 
-  const id = e.target.parentNode.id;  // 처음에 데이터 추가할 때 reducer에서 넣었었던 id를 알아낸다.
+  const id = parseInt(e.target.parentNode.id);  // 처음에 데이터 추가할 때 reducer에서 넣었었던 id를 알아낸다 -> 숫자로 변환
   store.dispatch(deleteToDo(id));
 }
 
@@ -38,13 +38,15 @@ const deleteToDo = (id) => {
 // [1] reducer  ('유일하게' data를 바꾸고 수정할 수 있는 함수)
 const reducer = (state = [], action) => {
 
-  // state 변경 (항상 새로운 state를 create하고 그 새로운 state를 return 한다)
+  // state 변경 (항상 새로운 state를 create 하고 그 새로운 state를 return 한다 -> 기존 state를 변화시키는 것이 아니다)
   switch (action.type) {
     case ADD_TODO:
-      return [...state, { text: action.text, id: Date.now() }];  // 삭제를 위해 id 값도 추가한다.
+      const newToDoObj = { text: action.text, id: Date.now() }   // 삭제를 위해 id값 추가.
+      return [...state, newToDoObj];
 
     case DELETE_TODO:
-      return [];
+      const cleaned = state.filter(toDo => toDo.id !== action.id);  // filter() 메서드는 기존 state를 바꾸지 않고 주어진 함수의 테스트를 통과하는 모든 요소를 모아 새로운 배열로 반환
+      return cleaned;
 
     default:
       return state;
