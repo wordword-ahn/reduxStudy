@@ -1,83 +1,44 @@
 import { createStore } from "redux";
 
 
-// 오타를 막기 위해 추가 -> 변수로 지정하면 오타냈을 때 자바스크립트 에러가 뜨면서 알 수 있다.
-const ADD = "ADD";
-const MINUS = "MINUS";
+// 오타를 막기 위한 선언
+const ADD_TODO = "ADD_TODO";
+const DELETE_TODO = "DELETE_TODO";
 
 
 // [1] reducer  ('유일하게' data를 바꾸고 수정할 수 있는 함수)
-const reducer = (count = 0, action) => {     // state = 0  (default 값 지정: 안그러면 최초 상태가 undefined로 뜬다)
+const reducer = (state = [], action) => {
+  console.log(action);
 
   // state 변경 (state 변경은 action을 통해 가능하다)
-  switch (action.type) {
-    case ADD   :  return count + 1
-    case MINUS :  return count - 1
-    default :     return count;
+  switch (action.type) {    
+    case ADD_TODO    : return []
+    case DELETE_TODO : return []
+    default          : return state;
   }
 };
 
 
+
 // [2] Store
-const countStore = createStore(reducer);
+const store = createStore(reducer);
 
 
 
-// ----- 화면에 값 띄우고 버튼 연결하기 위한 작업 -----
-const add = document.getElementById("add");
-const minus = document.getElementById("minus");
-const number = document.querySelector("span");
+// [3] dispatch를 통해 reducer에 action을 전달하기
+const onSubmit = (e) => {
+  e.preventDefault();
+  const toDo = input.value;
+  input.value = "";
 
-// 처음 화면에 뜨는 초기값
-number.innerText = 0;
-
-// 버튼에 전달할 함수
-const handleAdd = () => { countStore.dispatch({ type: ADD }) }
-const handleMinus = () => { countStore.dispatch({ type: MINUS })}
-
-// 버튼에 이벤트 연결
-add.addEventListener("click", handleAdd)      // add 버튼을 누르면 ADD라는 액션이 reducer에 전달된다!
-minus.addEventListener("click", handleMinus)  // add 버튼을 누르면 ADD라는 액션이 reducer에 전달된다!
-
-
-
-// [3] subscribe (store에 변화가 생길 때마다 발동 -> 텍스트를 바꾼다)
-const onChange = () => {
-  number.innerText = countStore.getState();  // getState: store 안에 있는 값 출력
+  store.dispatch({type: ADD_TODO, text: toDo})
 }
 
-countStore.subscribe(onChange);
 
 
+// [4] index.html 연결 (버튼 이벤트 연결)
+const form = document.querySelector("form");
+const input = document.querySelector("input");
+const ul = document.querySelector("ul");
 
-
-// [1]
-// const add = document.getElementById("add");
-// const minus = document.getElementById("minus");
-// const number = document.querySelector("span");
-
-
-// [2-1] 변경된 값 텍스트에 반영하기
-// let count = 0;
-// number.innerText = count;
-
-// const updateText = () => {
-//   number.innerText = count;
-// }
-
-
-// [2-2]
-// const handleAdd = () => {
-//   count = count + 1;
-//   updateText();  // 이걸 해줘야 변경된 값이 텍스트에 반영된다.
-// }
-
-// const handleMinus = () => {
-//   count = count - 1;
-//   updateText();  // 이걸 해줘야 변경된 값이 텍스트에 반영된다.
-// }
-
-
-// [3]
-// add.addEventListener("click", handleAdd);
-// minus.addEventListener("click", handleMinus);
+form.addEventListener("submit", onSubmit);
