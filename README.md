@@ -40,7 +40,7 @@ state = 0 구간이 없으면 초기값이 undefined로 뜬다.
 
 
 <br>
-[3] 화면에 값 띄우고 버튼 연결하기 위한 작업: C)에서 dispatch를 통해 reducer에 action을 전달하고 있다.
+[3] 화면에 값 띄우고 버튼 연결하기 위한 작업: B)에서 dispatch를 통해 reducer에 action을 전달하고 있다.
 
     const add = document.getElementById("add");
     const minus = document.getElementById("minus");
