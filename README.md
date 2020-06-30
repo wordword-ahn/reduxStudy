@@ -69,6 +69,7 @@ index.html
     
 <br>
 -----
+
 # 주의사항
 
 reducer에서의 state 변경
