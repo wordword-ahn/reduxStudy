@@ -1,20 +1,19 @@
 import { createStore } from "redux";
 
 
+// 오타를 막기 위해 추가 -> 변수로 지정하면 오타냈을 때 자바스크립트 에러가 뜨면서 알 수 있다.
+const ADD = "ADD";
+const MINUS = "MINUS";
+
+
 // [1] reducer  ('유일하게' data를 바꾸고 수정할 수 있는 함수)
 const reducer = (count = 0, action) => {     // state = 0  (default 값 지정: 안그러면 최초 상태가 undefined로 뜬다)
 
   // state 변경 (state 변경은 action을 통해 가능하다)
-  if(action.type === "ADD") {
-    return count + 1;
-  }
-
-  else if(action.type === "MINUS") {
-    return count -1;
-  }
-
-  else {
-    return count;  // reducer가 return하는건 내 application의 data가 된다!
+  switch (action.type) {
+    case ADD   :  return count + 1
+    case MINUS :  return count - 1
+    default :     return count;
   }
 };
 
@@ -24,14 +23,17 @@ const countStore = createStore(reducer);
 
 
 
-// ---------- 버튼을 만들기 위한 작업 ----------
+// ----- 화면에 값 띄우고 버튼 연결하기 위한 작업 -----
 const add = document.getElementById("add");
 const minus = document.getElementById("minus");
 const number = document.querySelector("span");
 
+// 처음 화면에 뜨는 초기값
+number.innerText = 0;
+
 // 버튼에 전달할 함수
-const handleAdd = () => { countStore.dispatch({ type: "ADD" }) }
-const handleMinus = () => { countStore.dispatch({ type: "MINUS" })}
+const handleAdd = () => { countStore.dispatch({ type: ADD }) }
+const handleMinus = () => { countStore.dispatch({ type: MINUS })}
 
 // 버튼에 이벤트 연결
 add.addEventListener("click", handleAdd)      // add 버튼을 누르면 ADD라는 액션이 reducer에 전달된다!
