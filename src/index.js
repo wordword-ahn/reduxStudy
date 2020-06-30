@@ -1,4 +1,4 @@
-import { createStore } from "redux";  // store가 하는 일: 나의 data(count)를 넣을 수 있는 장소를 생성
+import { createStore } from "redux";
 
 
 // [1] reducer  ('유일하게' data를 바꾸고 수정할 수 있는 함수)
@@ -24,9 +24,7 @@ const countStore = createStore(reducer);
 
 
 
-
-
-// [버튼을 만들기 위한 작업]
+// ---------- 버튼을 만들기 위한 작업 ----------
 const add = document.getElementById("add");
 const minus = document.getElementById("minus");
 const number = document.querySelector("span");
@@ -41,6 +39,12 @@ minus.addEventListener("click", handleMinus)  // add 버튼을 누르면 ADD라�
 
 
 
+// [3] subscribe (store에 변화가 생길 때마다 발동 -> 텍스트를 바꾼다)
+const onChange = () => {
+  number.innerText = countStore.getState();  // getState: store 안에 있는 값 출력
+}
+
+countStore.subscribe(onChange);
 
 
 
