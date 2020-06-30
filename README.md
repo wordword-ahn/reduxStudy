@@ -70,9 +70,9 @@ index.html
 <br>
 
 
-# 주의사항
+# 기타
 
-reducer에서의 state 변경
+##### reducer에서의 state 변경
 
 1. 항상 새로운 state를 create하고 그 새로운 state를 return한다.
 
@@ -93,3 +93,29 @@ reducer에서의 state 변경
           return state;
       }
     };
+
+
+
+<br>
+
+##### dispatch의 분리
+
+지금까지는 이런 식으로 dispatch를 통해 action을 전달했다.
+
+    const dispatchAddToDo = (text) => {
+      store.dispatch({ type: ADD_TODO, text })
+    }
+
+
+하지만 저 dispatch도 이런 식으로 나눌 수 있다.
+
+    const dispatchAddToDo = (text) => { 
+      store.dispatch(addToDo(text)) 
+    }
+
+    const addToDo = (text) => { 
+      return { 
+        type: ADD_TODO,  // action 타입
+        text             // 함께 전달
+      } 
+    }
