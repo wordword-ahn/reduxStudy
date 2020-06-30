@@ -6,9 +6,14 @@ const minus = document.getElementById("minus");
 const number = document.querySelector("span");
 
 
-// [2] data를 바꾸고 수정
-const reducer = () => {
-  return "헬로";  // 이렇게 해버리면 store의 data는 "헬로"가 되어버린다  ->  reducer가 return하는건 내 application의 data가 된다!
+// [2] '유일하게' data를 바꾸고 수정할 수 있는 함수
+const reducer = (count = 0) => {  // state = 0 형태를 넣은 이유: default 값 지정 (안그러면 최초 상태가 undefined가 되어버린다)
+  // A. state 변경은 action을 통해 가능하다.
+  count++;
+  count--;
+
+  // B. state 변경후 리턴
+  return count;  // reducer가 return하는건 내 application의 data가 된다!
 };
 
 
