@@ -35,6 +35,10 @@ const store = createStore(reducer);
 
 
 // [3] dispatch를 통해 reducer에 action 전달
+const addToDo = (text) => {
+  store.dispatch({ type: ADD_TODO, text })
+}
+
 const onSubmit = (e) => {
   e.preventDefault();
   const toDo = input.value;  // form이 submit 되면 input에서 값을 가져온다.
@@ -46,10 +50,23 @@ const onSubmit = (e) => {
 
 
 
-// [4] subscribe (store에 변화가 생길 때마다 발동)
-store.subscribe(() => {
-  console.log(store.getState());
-})
+// [4] subscribe (store에 변화가 생길 때마다 화면을 갱신한다)
+store.subscribe(() => { paintToDos() })
+
+// [화면 갱신]
+const paintToDos = () => {
+
+  // 스토어에서 값을 가져온다.
+  const toDos = store.getState();
+
+  // 스토어에서 가져온 데이터의 갯수만큼 반복문을 돌면서 li 태그를 계속 생성한다.
+  toDos.forEach(toDo => {
+    const li = document.createElement("li");
+    li.id = toDo.id;           // index.html의 li 태그 안에 id를 준다 (참고: 리듀서에서 모든 데이터에 id를 부여했음)
+    li.innerText = toDo.text;  // innerText: DOM 요소 내의 내용을 조작한다.
+    ul.appendChild(li);        // ul태그 안에 (위에서 텍스트를 넣어준) li 태그를 추가해준다.
+  })
+}
 
 
 
