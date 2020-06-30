@@ -33,37 +33,37 @@
     action은 countStore.dispatch("액션이름"); 형태로 전달된다.
 */
 
+
 import { createStore } from "redux";  // store가 하는 일: 나의 data(count)를 넣을 수 있는 장소를 생성
 
-// [1]
 const add = document.getElementById("add");
 const minus = document.getElementById("minus");
 const number = document.querySelector("span");
 
 
-// [2] reducer
-// '유일하게' data를 바꾸고 수정할 수 있는 함수
-// state = 0  :  default 값 지정 (안그러면 최초 상태가 undefined로 뜬다)
-// action     :  state 변경은 action을 통해 가능하다. reducer와 소통하기 위한 방법.
-const reducer = (count = 0, action) => {
+// [1] reducer  ('유일하게' data를 바꾸고 수정할 수 있는 함수)
+const reducer = (count = 0, action) => {     // state = 0 : default 값 지정 (안그러면 최초 상태가 undefined로 뜬다)
 
-  // A. state 변경
+  // A. state 변경 (state 변경은 action을 통해 가능하다) (action: reducer와 소통하기 위한 방법)
   if(action.type === "ADD") {
-    console.log("ADD를 하였습니다");      // 우리가 reducer에게 "ADD 해주세요!!"라고 요청하려면 action에 ADD를 넣어서 reducer에게 전달해야 한다.
+    return count + 1;
   }
 
   // B. state 변경후 리턴
-  return count;                        // reducer가 return하는건 내 application의 data가 된다!
+  return count;  // reducer가 return하는건 내 application의 data가 된다!
 };
 
 
-// [3] Store 생성
+// [2] Store
 const countStore = createStore(reducer);
 
 
-// [4] reducer에 액션 전달
-countStore.dispatch({type: "ADD"});  // action은 object 형태여야 한다.
+// [3] Action
+countStore.dispatch({type: "ADD"});  // 우리가 reducer에게 "ADD 해주세요!!"라고 요청하려면 action에 ADD를 넣어서 reducer에게 전달해야 한다. action은 object 형태여야 한다.
 
+
+// [4] ADD라는 액션이 끝난 뒤 Store에 들어간 데이터 확인
+console.log(countStore.getState());  // 초기값 0에 ADD라는 액션이 발동된 후 1이 나온다.
 
 
 
