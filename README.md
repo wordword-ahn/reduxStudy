@@ -40,20 +40,20 @@ state = 0 구간이 없으면 초기값이 undefined로 뜬다.
 
 
 <br>
-[3] 화면에 값 띄우고 버튼 연결하기 위한 작업
+[3] 화면에 값 띄우고 버튼 연결하기 위한 작업: C)에서 dispatch를 통해 reducer에 action을 전달하고 있다.
 
     const add = document.getElementById("add");
     const minus = document.getElementById("minus");
     const number = document.querySelector("span");
 
-    // 처음 화면에 뜨는 초기값
+    // A) 처음 화면에 뜨는 초기값
     number.innerText = 0;
 
-    // 버튼에 전달할 함수
+    // B) 버튼에 전달할 함수
     const handleAdd = () => { countStore.dispatch({ type: ADD }) }
     const handleMinus = () => { countStore.dispatch({ type: MINUS })}
 
-    // 버튼에 이벤트 연결
+    // C) 버튼에 이벤트 연결
     add.addEventListener("click", handleAdd)      // add 버튼을 누르면 ADD라는 액션이 reducer에 전달된다!
     minus.addEventListener("click", handleMinus)  // add 버튼을 누르면 ADD라는 액션이 reducer에 전달된다!
 
