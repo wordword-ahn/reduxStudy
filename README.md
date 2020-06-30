@@ -4,7 +4,7 @@
   3. action : dispatch를 통해 reducer에게 'data를 50으로 바꾸세요!' 이런 식으로 지시를 내린다.
   4. subscribe : store에 변화가 생길 때마다 발동
 
----------- <br>
+<br>
 
   # 이해를 돕기 위한 간단 예제 (+- 버튼 있는 카운터)
 
