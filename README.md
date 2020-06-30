@@ -17,8 +17,7 @@ index.html
   -----
 
 [1] reducer  
-'유일하게' data를 바꾸고 수정할 수 있는 함수.
-state = 0 구간이 없으면 초기값이 undefined로 뜬다.
+'유일하게' data를 바꾸고 수정할 수 있는 함수 (state = 0 구간이 없으면 초기값이 undefined로 뜬다)
     
     const reducer = (count = 0, action) => {     
 
