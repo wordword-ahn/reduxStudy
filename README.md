@@ -125,6 +125,7 @@ index.html
 
 # 순수 자바스크립트와 리액트의 차이
 
+#### subcribe
 리액트로 변환하기 전 소스코드에서는 subscribe를 썼었다.
 여기서 subscribe란, store에 변화가 생기면 발동되는 함수다.
 
@@ -159,3 +160,50 @@ index.html
       </Provider>,
       document.getElementById("root")
     );
+
+-----
+
+#### (dispach와 getState)  vs  (connect)
+store에 값을 넣거나, store에서 값을 가져오는 방식의 차이
+
+<br>
+
+dispach: reducer에 action을 전달하는 녀석.
+위에서 언급했듯, 순수 자바스크립트에서는 이렇게 action을 전달했었다.
+
+    const dispatchAddToDo = (text) => {
+        store.dispatch({ type: 값을_더해달라는_액션 })
+    }
+
+<br>
+
+그러나 리액트에서는 connect()를 사용한다.
+connect : 나의 components들을 store에 연결시켜준다.
+
+    import { connect } from "react-redux";
+
+
+
+connect는 2개의 인자를 받는다. 
+왜냐하면 state나 dispach 둘 중 하나를 골라야 하기 때문이다.
+
+1. store에 dispach를 통해 action을 전달해서 값을 넣을 것인가?
+2. store에서 getState를 해서 값을 가져올 것인가?
+-> 따라서 우리는 이 중 어떤걸 원하는지 결정해야 한다.
+
+
+        function mapStateToProps(state, ownProps) {
+            console.log(state, ownProps);
+            return 어쩌고저쩌고;
+        }
+
+        export default connect(mapStateToProps)(Home);  // export default Home; 형태를 이렇게 수정
+
+
+* 이 깃허브에 올라온 소스코드에서는 mapStateToProps를 getCurrentState라고 이름을 바꿔놨다.
+
+<br>
+
+    function mapStateToProps(state, ownProps)
+
+이 함수는 두 종류의 인자를 받는데 state는 Redux store로부터 온거고, 나머지는 component의 props이다.
