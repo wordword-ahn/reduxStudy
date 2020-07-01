@@ -5,18 +5,24 @@ const DELETE = "DELETE";
 
 
 // 1. action creator
-export const addToDo = (text) => {
+const addToDo = (text) => {
     return {
         type: ADD,
         text
     }
 }
 
-export const deleteToDo = id => {
+const deleteToDo = id => {
     return {
         type: DELETE,
         id
     }
+}
+
+// 위에서 'export const addToDo'라는 형태로 각각 export 시켜도 되지만, 이렇게 모아서 한방에 export 시킬 수도 있다. 
+export const actionCreators = {
+    addToDo,
+    deleteToDo
 }
 
 
