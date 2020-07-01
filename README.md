@@ -238,8 +238,6 @@ connect는 (mapStateToProps 함수를 통해) 2개의 인자를 받는다.
 
 
 mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,   
-현재 store에 들어 있는 값인 "ㅎㅇ"가 그대로 출력되는 것을 알 수 있다.   
-두번째 인자 ownProps는 (react-router에 의해) store가 나의 Home에게 준 props들이 나온다.
 
     function mapStateToProps(state, ownProps) {
         console.log(state, ownProps);
@@ -249,12 +247,13 @@ mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
 
 <br>
 
-출력결과
+현재 store에 들어 있는 값인 "ㅎㅇ"가 그대로 출력되는 것을 알 수 있다.   
+그리고 두번째 인자 ownProps는 (react-router에 의해) store가 나의 Home에게 준 props들이 나온다.
 
     ["hello"] 
     {history: {…}, location: {…}, match: {…}, staticContext: undefined}
 
-<br><br>
+<br>
 
 위의 두번째 인자에 들어오는 props는 이렇게도 확인할 수 있다.
 
@@ -266,16 +265,22 @@ mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
 
 ##### 부연설명
 
-만약 mapStateToProps에서 sexy: true를 리턴하면 그게 store에 저장되므로 위의 콘솔로그에 [sexy: true]도 함께 출력된다.
+만약 mapStateToProps에서 sexy: true를 리턴하면 그게 store에 저장되므로,
 
     function mapStateToProps(state, ownProps) {
         return { sexy: true }
     }
 
+아래의 콘솔로그에 [sexy: true]도 함께 출력된다.
+
+    function Home(props) {
+        console.log("스토어에서 받은 것들 : ", props);
+        ...
+
 <br>
 
 출력결과
 
-    {history: {…}, location: {…}, match: {…}, staticContext: undefined, sexy: true, …}
+    스토어에서 받은 것들 : {history: {…}, location: {…}, match: {…}, staticContext: undefined, sexy: true, …}
 
 
