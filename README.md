@@ -191,19 +191,36 @@ connect는 2개의 인자를 받는다.
 2. store에서 getState를 해서 값을 가져올 것인가?
 -> 따라서 우리는 이 중 어떤걸 원하는지 결정해야 한다.
 
-
-        function mapStateToProps(state, ownProps) {
-            console.log(state, ownProps);
-            return 어쩌고저쩌고;
-        }
-
-        export default connect(mapStateToProps)(Home);  // export default Home; 형태를 이렇게 수정
-
-
-* 이 깃허브에 올라온 소스코드에서는 mapStateToProps를 getCurrentState라고 이름을 바꿔놨다.
-
 <br>
 
     function mapStateToProps(state, ownProps)
 
-이 함수는 두 종류의 인자를 받는데 state는 Redux store로부터 온거고, 나머지는 component의 props이다.
+* 이 깃허브에 올라온 소스코드에서는 mapStateToProps를 getCurrentState라고 이름을 바꿔놨다.
+* 이 함수는 두 종류의 인자를 받는데 state는 Redux store로부터 온거고, 나머지는 component의 props이다.
+
+<br>
+
+이를 확인하기 위해 아래와 같이 리듀서의 초기값을 "ㅎㅇ"로 해놓고, 
+
+    const reducer = (state = ["ㅎㅇ"], action) => {
+        switch (action.type) {
+            case ADD: 
+              ...
+
+            case DELETE: 
+              ...
+
+            default: 
+              ...
+        }
+    }
+
+
+mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
+현재 store에 들어 있는 값인 "ㅎㅇ"가 그대로 출력되는 것을 알 수 있다.
+
+    function mapStateToProps(state, ownProps) {
+        console.log(state, ownProps);
+    }
+
+    export default connect(mapStateToProps)(Home);  // export default Home; 형태를 이렇게 수정
