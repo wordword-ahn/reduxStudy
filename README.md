@@ -183,8 +183,17 @@ connect : 나의 components들을 store에 연결시켜준다.
     import { connect } from "react-redux";
 
 
+    function mapStateToProps(state, ownProps) {
+        
+    }
 
-connect는 2개의 인자를 받는다. 
+    export default connect(mapStateToProps)(Home);  // export default Home; 형태를 이렇게 수정
+
+<br>
+
+##### connet가 뭐지?
+
+connect는 (mapStateToProps 함수를 통해) 2개의 인자를 받는다. 
 왜냐하면 state나 dispach 둘 중 하나를 골라야 하기 때문이다.
 
 1. store에 dispach를 통해 action을 전달해서 값을 넣을 것인가?
@@ -193,14 +202,23 @@ connect는 2개의 인자를 받는다.
 
 <br>
 
-    function mapStateToProps(state, ownProps)
+##### 그럼 mapStateToProps가 뭐지??
 
-* 이 깃허브에 올라온 소스코드에서는 mapStateToProps를 getCurrentState라고 이름을 바꿔놨다.
-* 이 함수는 두 종류의 인자를 받는데 state는 Redux store로부터 온거고, 나머지는 component의 props이다.
+    function mapStateToProps(state, ownProps) {     // 참고: 깃허브에 올린 소스코드에서는 getCurrentState라고 이름을 바꿔놨다.
+        return { sexy: true }
+    }
+
+
+* 이 함수는 두 종류의 인자를 받는다.
+1. state : Redux store로부터 온거다.
+2. ownProps : component의 props이다 -> 즉 store에서 Home.js에 준 props 전체가 나온다.
+
+
+
 
 <br>
 
-이를 확인하기 위해 아래와 같이 리듀서의 초기값을 "ㅎㅇ"로 해놓고, 
+이를 확인하기 위해 아래와 같이 리듀서에서 store의 초기값을 "ㅎㅇ"로 해놓고, 
 
     const reducer = (state = ["ㅎㅇ"], action) => {
         switch (action.type) {
@@ -218,9 +236,43 @@ connect는 2개의 인자를 받는다.
 
 mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
 현재 store에 들어 있는 값인 "ㅎㅇ"가 그대로 출력되는 것을 알 수 있다.
+두번째 인자 ownProps는 (react-router에 의해) store가 나의 Home에게 준 props들이 나온다.
 
     function mapStateToProps(state, ownProps) {
         console.log(state, ownProps);
     }
 
     export default connect(mapStateToProps)(Home);  // export default Home; 형태를 이렇게 수정
+
+<br>
+
+출력결과
+
+    ["hello"] 
+    {history: {…}, location: {…}, match: {…}, staticContext: undefined}
+
+<br><br>
+
+위의 두번째 인자에 들어오는 props는 이렇게도 확인할 수 있다.
+
+    function Home(props) {
+        console.log("스토어에서 받은 것들 : ", props);
+        ...
+
+<br>
+
+##### 부연설명
+
+만약 mapStateToProps에서 sexy: true를 리턴하면 그게 store에 저장되므로 위의 콘솔로그에 [sexy: true]도 함께 출력된다.
+
+    function mapStateToProps(state, ownProps) {
+        return { sexy: true }
+    }
+
+<br>
+
+출력결과
+
+    {history: {…}, location: {…}, match: {…}, staticContext: undefined, sexy: true, …}
+
+
