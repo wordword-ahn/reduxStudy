@@ -208,7 +208,7 @@ connect는 (mapStateToProps 함수를 통해) 2개의 인자를 받는다.
 
 #### mapStateToProps
 
-    function mapStateToProps(state, ownProps) {     // 참고: 깃허브에 올린 소스코드에서는 getCurrentState라고 이름을 바꿔놨다.
+    function mapStateToProps(state, ownProps) {
         return 어쩌고저쩌고;
     }
 
@@ -296,3 +296,24 @@ mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
 출력결과
 
     스토어에서 받은 것들 : {history: {…}, location: {…}, match: {…}, staticContext: undefined, toDos: ["ㅎㅇ"], …}
+
+
+
+<br><br> 
+
+## connect와 mapStateToProps에 대한 요약
+
+뭔가 복잡하게 설명해놓았지만, 요약하자면 '리액트 컴포넌트가 store와 연결하기 위한' 장치이다.
+
+1. store의 값을 가져올건가?
+2. store의 값을 바꿀건가?
+
+        // Redux state로부터 home(component)에 prop으로써 전달
+        function mapStateToProps(state, ownProps) {
+            return { 연락처: state };
+        }
+
+        // connect는 나의 components들을 store에 연결시켜준다.
+        export default connect(mapStateToProps)(Home);
+
+
