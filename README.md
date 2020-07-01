@@ -166,45 +166,55 @@ index.html
 
 <br>
 
-#### (dispach와 getState)  vs  (connect)
-store에 값을 넣거나, store에서 값을 가져오는 방식의 차이
+### store와 소통하는 방식의 차이
+순수 자바스크립트에서는 dispach를 통해 reducer에 action을 전달했고, store.getState()를 통해 값을 받아왔었다.
 
-<br>
-
-위에서 dispach는 reducer에 action을 전달하는 녀석이라고 했었다.    
-즉, 순수 자바스크립트에서는 이렇게 action을 전달했었다.
-
+    // 값 바꾸기 (action 전달)
     const dispatchAddToDo = (text) => {
         store.dispatch({ type: 값을_더해달라는_액션 })
     }
 
+    // 값 가져오기
+    store.getState()
+
 <br>
 
 그러나 리액트에서는 connect()를 사용해서 store와 component를 연결한다.   
+즉, 리액트 컴포넌트는 connect를 통해 store와 소통한다.
+
 
     import { connect } from "react-redux";
-
 
     function mapStateToProps(state, ownProps) {
         어쩌고저쩌고
     }
 
-    export default connect(mapStateToProps)(Home);  // export default Home; 형태를 이렇게 수정
+    export default connect(mapStateToProps, mapDispatchToProps)(Home);  // export default Home; 형태를 이렇게 수정
 
 -----
 
 <br>
 
+
 #### connet
 
-connect는 (mapStateToProps 함수를 통해) 2개의 인자를 받는다.  
+connect는 2개의 인자를 받는다.  
 왜냐하면 state나 dispach 둘 중 하나를 골라야 하기 때문이다.
 
 1. store에 dispach를 통해 action을 전달해서 값을 넣을 것인가?
 2. store에서 getState를 해서 값을 가져올 것인가?    
 -> 따라서 우리는 이 중 어떤걸 원하는지 결정해야 한다.
 
+-----
+
 <br>
+
+### 값 가져오기 (getState vs mapStateToProps)
+1. 순수 자바스크립트에서는 store에 있는 state를 store.getState()를 통해 받아왔었다.
+2. 리액트에서는 mapStateToProps()를 통해 받아온다. 그리고 리액트 컴포넌트는 connect를 통해 store와 소통한다.
+
+<br>
+
 
 #### mapStateToProps
 
@@ -301,7 +311,7 @@ mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
 
 <br><br> 
 
-## connect와 mapStateToProps에 대한 요약
+## connect 요약
 
 뭔가 복잡하게 설명해놓았지만, 요약하자면 '리액트 컴포넌트가 store와 연결하기 위한' 장치이다.
 
@@ -317,3 +327,6 @@ mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
         export default connect(mapStateToProps)(Home);
 
 
+#### 어떻게 하면 component가 dispatch 동작도 할 수 있을까?
+
+mapDispatchToProps
