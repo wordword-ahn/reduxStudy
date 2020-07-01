@@ -126,7 +126,7 @@ index.html
 
 # 순수 자바스크립트와 리액트의 차이
 
-#### subcribe
+### subcribe
 리액트로 변환하기 전 소스코드에서는 subscribe를 썼었다.
 여기서 subscribe란, store에 변화가 생기면 발동되는 함수다.
 
@@ -137,7 +137,7 @@ index.html
 
 <br>
 
-##### <Provider로 감싸기 전>
+#### <Provider로 감싸기 전>
 
     import React from "react";
     import ReactDOM from "react-dom";
@@ -147,7 +147,7 @@ index.html
 
 <br>
 
-##### <Provider로 감싼 후>
+#### <Provider로 감싼 후>
 
     import React from "react";
     import ReactDOM from "react-dom";
@@ -171,8 +171,8 @@ store에 값을 넣거나, store에서 값을 가져오는 방식의 차이
 
 <br>
 
-dispach: reducer에 action을 전달하는 녀석.    
-위에서 언급했듯, 순수 자바스크립트에서는 이렇게 action을 전달했었다.
+위에서 dispach는 reducer에 action을 전달하는 녀석이라고 했었다.    
+즉, 순수 자바스크립트에서는 이렇게 action을 전달했었다.
 
     const dispatchAddToDo = (text) => {
         store.dispatch({ type: 값을_더해달라는_액션 })
@@ -180,8 +180,7 @@ dispach: reducer에 action을 전달하는 녀석.
 
 <br>
 
-그러나 리액트에서는 connect()를 사용한다.   
-connect : 나의 components들을 store에 연결시켜준다.
+그러나 리액트에서는 connect()를 사용해서 store와 component를 연결한다.   
 
     import { connect } from "react-redux";
 
@@ -192,9 +191,11 @@ connect : 나의 components들을 store에 연결시켜준다.
 
     export default connect(mapStateToProps)(Home);  // export default Home; 형태를 이렇게 수정
 
+-----
+
 <br>
 
-##### connet가 뭐지?
+#### connet
 
 connect는 (mapStateToProps 함수를 통해) 2개의 인자를 받는다.  
 왜냐하면 state나 dispach 둘 중 하나를 골라야 하기 때문이다.
@@ -205,12 +206,13 @@ connect는 (mapStateToProps 함수를 통해) 2개의 인자를 받는다.
 
 <br>
 
-##### 그럼 mapStateToProps가 뭐지??
+#### mapStateToProps
 
     function mapStateToProps(state, ownProps) {     // 참고: 깃허브에 올린 소스코드에서는 getCurrentState라고 이름을 바꿔놨다.
         return 어쩌고저쩌고;
     }
 
+<br>
 
 이 함수는 두 종류의 인자를 받는다.
 1. state : Redux store로부터 온 state.
@@ -236,6 +238,7 @@ connect는 (mapStateToProps 함수를 통해) 2개의 인자를 받는다.
         }
     }
 
+<br>
 
 mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,   
 
@@ -250,20 +253,20 @@ mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
 현재 store에 들어 있는 값인 "ㅎㅇ"가 그대로 출력되는 것을 알 수 있다.   
 그리고 두번째 인자 ownProps는 (react-router에 의해) store가 나의 Home에게 준 props들이 나온다.
 
-    ["hello"] 
+    ["ㅎㅇ"] 
     {history: {…}, location: {…}, match: {…}, staticContext: undefined}
 
 <br>
 
-위의 두번째 인자에 들어오는 props는 이렇게도 확인할 수 있다.
+* 참고: 위의 두번째 인자에 들어오는 props는 이렇게도 확인할 수 있다.
 
-    function Home(props) {
-        console.log("스토어에서 받은 것들 : ", props);
-        ...
+      function Home(props) {
+          console.log("스토어에서 받은 것들 : ", props);
 
-<br>
 
-##### 부연설명
+<br><br>
+
+#### 부연설명
 
 만약 mapStateToProps에서 sexy: true를 리턴하면 그게 store에 저장되므로,
 
@@ -271,16 +274,25 @@ mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
         return { sexy: true }
     }
 
-아래의 콘솔로그에 [sexy: true]도 함께 출력된다.
+아래의 콘솔로그에 [sexy: true]란 prop도 함께 출력된다.
 
     function Home(props) {
         console.log("스토어에서 받은 것들 : ", props);
-        ...
 
-<br>
 
 출력결과
 
     스토어에서 받은 것들 : {history: {…}, location: {…}, match: {…}, staticContext: undefined, sexy: true, …}
 
+<br><br>
 
+... 물론 실제로는 이런 식으로 써야 한다.
+
+    function mapStateToProps(state, ownProps) {
+        return { toDos : state }
+    }
+
+
+출력결과
+
+    스토어에서 받은 것들 : {history: {…}, location: {…}, match: {…}, staticContext: undefined, toDos: ["ㅎㅇ"], …}
