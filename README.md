@@ -12,7 +12,7 @@
 
 <br>
 
-# 1. 순수 자바스크립트 예제 (+- 버튼 있는 카운터)
+# 1. 순수 자바스크립트에서의 리덕스 예제 (+- 버튼 있는 카운터)
 
 index.html
 
@@ -29,9 +29,9 @@ index.html
 
       // state 변경 (state 변경은 action을 통해 가능하다)
       switch (action.type) {
-        case ADD   :  return count + 1
-        case MINUS :  return count - 1
-        default :     return count;
+        case ADD   : return count + 1
+        case MINUS : return count - 1
+        default    : return count;
       }
     };
 <br>
@@ -128,7 +128,7 @@ index.html
     }
 
 
-<br><br>
+<br><br><br><br>
 
 # 2. 순수 자바스크립트와 리액트의 리덕스 차이
 
@@ -175,12 +175,12 @@ index.html
 ### store와 소통하는 방식의 차이
 순수 자바스크립트에서는 dispach를 통해 reducer에 action을 전달했고, store.getState()를 통해 값을 받아왔었다.
 
-    // 값 바꾸기 (action 전달)
+    // 1. 값 바꾸기 (action 전달)
     const dispatchAddToDo = (text) => {
         store.dispatch({ type: 값을_더해달라는_액션 })
     }
 
-    // 값 가져오기
+    // 2. 값 가져오기
     store.getState()
 
 <br>
@@ -207,15 +207,26 @@ index.html
 connect는 2개의 인자를 받는다.  
 왜냐하면 state나 dispach 둘 중 하나를 골라야 하기 때문이다.
 
-1. store에 dispach를 통해 action을 전달해서 값을 넣을 것인가?
-2. store에서 getState를 해서 값을 가져올 것인가?    
+    export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
+
+1. store에서 getState를 해서 값을 가져올 것인가?    
+2. store에 dispach를 통해 action을 전달해서 값을 넣을 것인가?
 -> 따라서 우리는 이 중 어떤걸 원하는지 결정해야 한다.
+
+<br>
+
+예시) 만약 mapState는 필요하지 않고 dispatch만 필요한 경우, 필요없는 놈은 null로 전달한다.
+
+    export default connect(null, mapDispatchToProps)(Home);
+
+<br>
 
 -----
 
 <br>
 
-### 값 가져오기 (getState vs mapStateToProps)
+### A. 값 가져오기 (getState vs mapStateToProps)
 1. 순수 자바스크립트에서는 store에 있는 state를 store.getState()를 통해 받아왔었다.
 2. 리액트에서는 mapStateToProps()를 통해 받아온다. 그리고 리액트 컴포넌트는 connect를 통해 store와 소통한다.
 
@@ -317,9 +328,99 @@ mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
 
 <br><br> 
 
+-----
+
+### B. 값 수정하기 (dispatch vs mapDispatchToProps) - action의 전달
+
+순수 자바스크립트에서는 값을 바꾸기 위해 dispatch를 통해 action을 전달했었다.
+
+    // 값 바꾸기 (action 전달)
+    const dispatchAddToDo = (text) => {
+        store.dispatch({ type: 값을_더해달라는_액션 })
+    }
+
+
+그러나 리액트에서는 mapDispatchToProps를 사용한다.
+
+<br><br>
+
+우선 store.js 파일에서 "state에 텍스트를 더해주세요!"라는 액션을 만든다.
+
+    export const addToDo = (text) => {
+        return {
+            type: ADD,
+            text
+        }
+    }
+
+위 형태는 아래와 같이 분리시켜서 모아서 export 할 수도 있다.
+
+    const addToDo = (text) => {
+        return {
+            type: ADD,
+            text
+        }
+    }
+
+    export const actionCreators = {
+        addToDo,
+    }
+
+<br>
+
+
+
+이후 저 store.js 파일을 Home.js에서 import로 가져와서 사용한다.
+
+    import { actionCreators } from "../store";
+
+    function Home({ toDos, addToDo }) {
+        console.log("스토어에서 받은 addToDo : ", addToDo);
+
+    (...)
+
+
+
+이후 mapDispatchToProps에서 store에게 addToDo라는 함수를 주면, store가 다시 Home.js에 addToDo라는 함수를 준다.
+
+    function mapDispatchToProps(dispatch, ownProps) {
+        return {
+            // 아래의 값을 리턴한 뒤, 콘솔로그로 Home.js에 들어오는 addToDo를 확인해보면 addToDo라는 함수가 다시 들어온다.
+            addToDo: (text) => dispatch(actionCreators.addToDo(text))   // dispatch를 호출 -> 그리고 dispatch는 store에서 만든 actionCreators를 호출 -> actionCreators 안에 있는 여러 action들 중에서 addToDo를 가져옴 -> addToDo는 텍스트를 인자로 받음
+        };
+    }
+
+
+store는 변화가 있을 때마다 Home.js에 addToDo라는 함수를 준다.
+그러면 Home.js는 자기가 받은 addToDo 함수를 이렇게 사용할 수 있다.
+
+    // 버튼 누르면 이게 발동
+    function onSubmit(e) {
+        e.preventDefault();
+        addToDo(text);
+        setText("");
+    }
+
+<br>
+
+#### 이렇게 추론한 이유
+
+Home.js에서 콘솔로그로 확인해보면 다음과 같은 순서로 실행되고 있었다.
+1. mapStateToProps (이후 [추가] 누를 때마다 실행된다)
+2. mapDispatchToProps (최초 실행시에만 1번 실행된다)
+3. Home.js의 매개변수에 들어간 addToDo
+
+        function Home({ toDos, addToDo }) {
+            console.log("스토어에서 받은 addToDo : ", addToDo);
+
+
+-----
+
+<br>
+
 ## connect 요약
 
-뭔가 복잡하게 설명해놓았지만, 요약하자면 '리액트 컴포넌트가 store와 연결하기 위한' 장치이다.
+connect는 '리액트 컴포넌트가 store와 연결하기 위한' 장치이다.
 
 1. store의 값을 가져올건가?
 2. store의 값을 바꿀건가?
@@ -329,10 +430,10 @@ mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
             return { 연락처: state };
         }
 
+        function mapDispatchToProps(dispatch, ownProps) {
+            return { addToDo: () => dispatch(액션이름) }
+        }
+
         // connect는 나의 components들을 store에 연결시켜준다.
-        export default connect(mapStateToProps)(Home);
+        export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
-
-#### 어떻게 하면 component가 dispatch 동작도 할 수 있을까?
-
-mapDispatchToProps
