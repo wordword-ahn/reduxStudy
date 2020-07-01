@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { actionCreators } from "../store";
+import ToDo from "../components/ToDo"
 
 function Home({ toDos, addToDo }) {
-    console.log("스토어에서 받은 addToDo : ", addToDo);
 
     // 사용자가 입력한 텍스트로 변경
     const [text, setText] = useState("");  // Hook: 함수 컴포넌트는 "state가 없는 컴포넌트"지만, Hook을 통해 [React state]를 함수 안에서 사용할 수 있게 해줌 (초기값: "")
@@ -26,7 +26,22 @@ function Home({ toDos, addToDo }) {
                 <button> 추가 </button>
             </form>
 
-            <ul> {JSON.stringify(toDos)} </ul>
+            {/* 
+                toDos: store로부터 props로 받은 배열.
+                map: 배열 안에 있는 모든 요소 각각에 대해 주어진 함수를 호출한 결과를 모아 새로운 배열을 반환    
+
+                예시
+                [1, 2, 3].map(x => x * 2)
+                
+                결과
+                [2, 4, 6]
+            */}
+            
+            <ul>
+                {toDos.map(toDo => (
+                    <ToDo {...toDo} key={toDo.id} />
+                ))}
+            </ul>
         </>
     );
 }
@@ -39,14 +54,11 @@ function Home({ toDos, addToDo }) {
 
 // Redux state로부터 home(component)에 prop으로써 전달 -> 우리의 todo를 render 할 수 있게 됨
 function mapStateToProps(state, ownProps) {
-    console.log("1. mapStateToProps", state, ownProps);    
     return { toDos: state }
 }
 
 // dispatch: 콘솔로그 찍어보면 store.dispatch()처럼 redux에서 제공하는 함수라는 점을 알 수 있다.
 function mapDispatchToProps(dispatch, ownProps) {
-    console.log("mapDispatchToProps 실행");
-    
 
     return {
         // 아래의 값을 리턴한 뒤, 콘솔로그로 Home.js에 들어오는 addToDo를 확인해보면 addToDo라는 함수가 다시 들어온다.

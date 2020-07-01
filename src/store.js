@@ -27,13 +27,13 @@ export const actionCreators = {
 
 
 // 2. reducer
-const reducer = (state = ["ㅎㅇ"], action) => {
+const reducer = (state = [], action) => {
     switch (action.type) {
         case ADD:
             return [{ text: action.text, id: Date.now() }, ...state];
 
         case DELETE:
-            const notDelete = toDo => toDo !== action.id;
+            const notDelete = toDo => toDo.id !== action.id;
             return state.filter(notDelete);  // filter: 배열을 싹다 돌면서 "매개변수( )에 들어가는 함수의 리턴문"에 해당하는 대상만 찾는다.
 
         default:
