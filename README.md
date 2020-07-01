@@ -119,3 +119,42 @@ index.html
         text             // 함께 전달
       } 
     }
+
+
+<br>
+
+# 순수 자바스크립트와 리액트의 차이
+
+리액트로 변환하기 전 소스코드에서는 subscribe를 썼었다.
+여기서 subscribe란, store에 변화가 생기면 발동되는 함수다.
+
+그런데 react는 변화가 일어나는 구간만 다시 render하는 특성이 있다.
+따라서 subscribe를 사용하지 않고 그냥 전체를 Provider로 감싸는 처리를 한다.
+
+    yarn add react-redux react-router-dom
+
+<br>
+
+##### <Provider로 감싸기 전>
+
+    import React from "react";
+    import ReactDOM from "react-dom";
+    import App from "./components/App";
+
+    ReactDOM.render(<App></App>, document.getElementById("root"));
+
+<br>
+
+##### <Provider로 감싼 후>
+
+    import React from "react";
+    import ReactDOM from "react-dom";
+    import App from "./components/App";
+    import { Provider } from "react-redux";
+    import store from "./store";
+
+    ReactDOM.render(
+      <Provider store={store}>
+        <App />, document.getElementById("root")
+      </Provider>
+    );
