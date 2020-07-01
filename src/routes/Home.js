@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { actionCreators } from "../store";
 import ToDo from "../components/ToDo"
 
-function Home({ toDos, addToDo }) {
+function Home({ toDos, addToDo }) {    
 
     // 사용자가 입력한 텍스트로 변경
     const [text, setText] = useState("");  // Hook: 함수 컴포넌트는 "state가 없는 컴포넌트"지만, Hook을 통해 [React state]를 함수 안에서 사용할 수 있게 해줌 (초기값: "")
