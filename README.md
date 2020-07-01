@@ -285,7 +285,7 @@ mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
 
 <br>
 
-* 참고: 위의 두번째 인자에 들어오는 props는 이렇게도 확인할 수 있다.
+* 참고: 이 상태에서는 위의 두번째 인자에 들어오는 props를 이렇게도 확인할 수 있었다.
 
       function Home(props) {
           console.log("스토어에서 받은 것들 : ", props);
@@ -295,7 +295,7 @@ mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
 
 #### 부연설명
 
-만약 mapStateToProps에서 sexy: true를 리턴하면 그게 store에 저장되므로,
+저 상태에서 만약 mapStateToProps에서 sexy: true를 리턴하면,
 
     function mapStateToProps(state, ownProps) {
         return { sexy: true }
