@@ -39,7 +39,8 @@ index.html
 
 
 <br>
-[3] 화면에 값 띄우고 버튼 연결하기 위한 작업: B)에서 dispatch를 통해 reducer에 action을 전달하고 있다.
+
+[3] 화면에 값 띄우고 버튼 연결하기 위한 작업: (B)에서 dispatch를 통해 reducer에 action을 전달하고 있다.
 
     const add = document.getElementById("add");
     const minus = document.getElementById("minus");
@@ -170,7 +171,7 @@ store에 값을 넣거나, store에서 값을 가져오는 방식의 차이
 
 <br>
 
-dispach: reducer에 action을 전달하는 녀석.
+dispach: reducer에 action을 전달하는 녀석.    
 위에서 언급했듯, 순수 자바스크립트에서는 이렇게 action을 전달했었다.
 
     const dispatchAddToDo = (text) => {
@@ -179,7 +180,7 @@ dispach: reducer에 action을 전달하는 녀석.
 
 <br>
 
-그러나 리액트에서는 connect()를 사용한다.
+그러나 리액트에서는 connect()를 사용한다.   
 connect : 나의 components들을 store에 연결시켜준다.
 
     import { connect } from "react-redux";
@@ -211,7 +212,7 @@ connect는 (mapStateToProps 함수를 통해) 2개의 인자를 받는다.
     }
 
 
-* 이 함수는 두 종류의 인자를 받는다.
+이 함수는 두 종류의 인자를 받는다.
 1. state : Redux store로부터 온 state.
 2. ownProps : component의 props이다 -> 즉 store에서 Home.js에 준 props 전체가 나온다.
 
@@ -236,8 +237,8 @@ connect는 (mapStateToProps 함수를 통해) 2개의 인자를 받는다.
     }
 
 
-mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
-현재 store에 들어 있는 값인 "ㅎㅇ"가 그대로 출력되는 것을 알 수 있다.
+mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,   
+현재 store에 들어 있는 값인 "ㅎㅇ"가 그대로 출력되는 것을 알 수 있다.   
 두번째 인자 ownProps는 (react-router에 의해) store가 나의 Home에게 준 props들이 나온다.
 
     function mapStateToProps(state, ownProps) {
