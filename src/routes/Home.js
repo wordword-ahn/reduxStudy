@@ -1,3 +1,4 @@
+// App.js -> Home.js (주소에 아무 path도 주어지지 않았을 때 기본적으로 보여주는 라우터)
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { actionCreators } from "../store";
@@ -36,10 +37,13 @@ function Home({ toDos, addToDo }) {
                 결과
                 [2, 4, 6]
             */}
-            
+
             <ul>
                 {toDos.map(toDo => (
-                    <ToDo {...toDo} key={toDo.id} />
+                    <ToDo
+                        {...toDo}  // toDos는 store에서 ADD라는 action에 의해 생성될 때 각 요소들이 각각 [text]와 [id]를 갖는다. 따라서 map 함수가 모든 요소들을 1개씩 방문할 때마다 ToDo.js에는 각각의 text와 id가 전달된다.
+                        key={toDo.id}
+                    />
                 ))}
             </ul>
         </>
