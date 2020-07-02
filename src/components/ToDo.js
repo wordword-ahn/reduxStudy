@@ -4,13 +4,13 @@ import { actionCreators } from "../store";
 import { Link } from "react-router-dom";
 
 // Home.js에서 전달받은 인자: [text, id]
-function ToDo( { text, id, onBtnClick } ) {
+function ToDo( { 이름, id, onBtnClick } ) {
         
     return (
         <li>
             {/* App.js에서 path가 [ /:id ] 형태일 경우 Detail.js 파일로 이동하도록 설정 -> 클릭시 이동 */}
             <Link to={`/contacts/${id}`}>
-                {text}
+                {이름}
             </Link>
 
             <button onClick={onBtnClick}> DEL </button>

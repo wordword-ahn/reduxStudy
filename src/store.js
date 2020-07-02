@@ -5,10 +5,11 @@ const DELETE = "DELETE";
 
 
 // 1. action creator
-const addToDo = (text) => {
+const addToDo = (이름, 휴대전화번호) => {
     return {
         type: ADD,
-        text
+        이름, 
+        휴대전화번호
     }
 }
 
@@ -30,7 +31,13 @@ export const actionCreators = {
 const reducer = (state = [], action) => {
     switch (action.type) {
         case ADD:
-            return [{ text: action.text, id: Date.now() }, ...state];
+            return [
+                { 
+                    이름: action.이름, 
+                    휴대전화번호: action.휴대전화번호,
+                    id: Date.now()
+                }, ...state
+            ];
 
         case DELETE:
             const notDelete = toDo => toDo.id !== action.id;
