@@ -9,7 +9,7 @@ function ToDo( { text, id, onBtnClick } ) {
     return (
         <li>
             {/* App.js에서 path가 [ /:id ] 형태일 경우 Detail.js 파일로 이동하도록 설정 -> 클릭시 이동 */}
-            <Link to={`/${id}`}>
+            <Link to={`/contacts/${id}`}>
                 {text}
             </Link>
 

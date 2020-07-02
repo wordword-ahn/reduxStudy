@@ -3,29 +3,21 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { actionCreators } from "../store";
 import ToDo from "../components/ToDo"
+import { Link } from "react-router-dom";
 
 function Home({ toDos, addToDo }) {    
 
     // 사용자가 입력한 텍스트로 변경
-    const [text, setText] = useState("");  // Hook: 함수 컴포넌트는 "state가 없는 컴포넌트"지만, Hook을 통해 [React state]를 함수 안에서 사용할 수 있게 해줌 (초기값: "")
+    const [searchText, setText] = useState("");  // Hook: 함수 컴포넌트는 "state가 없는 컴포넌트"지만, Hook을 통해 [React state]를 함수 안에서 사용할 수 있게 해줌 (초기값: "")
     function onChange(e) {
         setText(e.target.value);
     }
 
-    // 버튼 누르면 이게 발동
-    function onSubmit(e) {
-        e.preventDefault();
-        addToDo(text);
-        setText("");
-    }
-
     return (
         <>
-            <h1> 목록 </h1>
-            <form onSubmit={onSubmit}>
-                <input type="text" value={text} onChange={onChange} />
-                <button> 추가 </button>
-            </form>
+            <button>
+                <Link to="/enroll"> 연락처 등록 </Link>
+            </button>
 
             {/* 
                 toDos: store로부터 props로 받은 배열.
@@ -38,13 +30,20 @@ function Home({ toDos, addToDo }) {
                 [2, 4, 6]
             */}
 
+            <h1> 전체 연락처 {toDos.length} </h1>
+            <input type="text" value={searchText} onChange={onChange} placeholder="연락처를 검색하세요." />
+
             <ul>
-                {toDos.map(toDo => (
-                    <ToDo
-                        {...toDo}  // toDos는 store에서 ADD라는 action에 의해 생성될 때 각 요소들이 각각 [text]와 [id]를 갖는다. 따라서 map 함수가 모든 요소들을 1개씩 방문할 때마다 ToDo.js에는 각각의 text와 id가 전달된다.
-                        key={toDo.id}
-                    />
-                ))}
+                {
+                    toDos
+                    .filter(toDos => toDos.text.indexOf(searchText)> -1)  // 검색 기능 구현 (참고자료: https://ndb796.tistory.com/254)
+                    .map(toDo => (
+                        <ToDo
+                            {...toDo}  // toDos는 store에서 ADD라는 action에 의해 생성될 때 각 요소들이 각각 [text]와 [id]를 갖는다. 따라서 map 함수가 모든 요소들을 1개씩 방문할 때마다 ToDo.js에는 각각의 text와 id가 전달된다.
+                            key={toDo.id}
+                        />
+                    ))
+                }
             </ul>
         </>
     );
