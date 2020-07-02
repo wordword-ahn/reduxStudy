@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { actionCreators } from "../store";
 import ToDo from "../components/ToDo"
 import { Link } from "react-router-dom";
-import './TodoListTemplate.css';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
