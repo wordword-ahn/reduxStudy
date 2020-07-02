@@ -4,8 +4,20 @@ import { connect } from "react-redux";
 import { actionCreators } from "../store";
 import ToDo from "../components/ToDo"
 import { Link } from "react-router-dom";
+import './TodoListTemplate.css';
 
-function Home({ toDos, addToDo }) {    
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+
+
+function Home({ toDos, addToDo, ownProps }) {    
 
     // 사용자가 입력한 텍스트로 변경
     const [searchText, setText] = useState("");  // Hook: 함수 컴포넌트는 "state가 없는 컴포넌트"지만, Hook을 통해 [React state]를 함수 안에서 사용할 수 있게 해줌 (초기값: "")
@@ -15,22 +27,52 @@ function Home({ toDos, addToDo }) {
 
     return (
         <>
+            <h1> 전체 연락처 {toDos.length} </h1>
+            <Paper className={"App-paper-1"}>
+                <AppBar className={"App-searchBar-2"} position="static" color="default" elevation={0}>
+                    <Toolbar>
+                        <Grid container spacing={2} alignItems="center">
+                            <Grid item>
+                            </Grid>
+                            <Grid item xs>
+                                <TextField
+                                    fullWidth
+                                    value={searchText} onChange={onChange} placeholder="연락처 검색: "
+                                />
+                            </Grid>
+                            <Grid item>
+                                <Button variant="outlined" color="primary">
+                                    <Link to="/enroll"> 연락처 등록 </Link>
+                                </Button>
+                                <Tooltip title="Reload">
+                                    <IconButton>
+                                    </IconButton>
+                                </Tooltip>
+                            </Grid>
+                        </Grid>
+                    </Toolbar>
+                </AppBar>
+                <div className={"App-contentWrapper-6"}>
+                    <Typography color="textSecondary" align="center">
+                        {
+                            toDos
+                                .filter(toDos => toDos.이름.indexOf(searchText) > -1)  // 검색 기능 구현 (참고자료: https://ndb796.tistory.com/254)
+                                .map(toDo => (
+                                    <ToDo
+                                        {...toDo}  // toDos는 store에서 ADD라는 action에 의해 생성될 때 각 요소들이 각각 [text]와 [id]를 갖는다. 따라서 map 함수가 모든 요소들을 1개씩 방문할 때마다 ToDo.js에는 각각의 text와 id가 전달된다.
+                                        key={toDo.id}
+                                    />
+                                ))
+                        }
+                    </Typography>
+                </div>
+            </Paper>
+
+{/* 
             <button>
                 <Link to="/enroll"> 연락처 등록 </Link>
             </button>
 
-            {/* 
-                toDos: store로부터 props로 받은 배열.
-                map: 배열 안에 있는 모든 요소 각각에 대해 주어진 함수를 호출한 결과를 모아 새로운 배열을 반환    
-
-                예시
-                [1, 2, 3].map(x => x * 2)
-                
-                결과
-                [2, 4, 6]
-            */}
-
-            <h1> 전체 연락처 {toDos.length} </h1>
             <input type="text" value={searchText} onChange={onChange} placeholder="연락처를 검색하세요." />
 
             <ul>
@@ -45,6 +87,8 @@ function Home({ toDos, addToDo }) {
                     ))
                 }
             </ul>
+ */}
+
         </>
     );
 }
@@ -57,7 +101,7 @@ function Home({ toDos, addToDo }) {
 
 // Redux state로부터 home(component)에 prop으로써 전달 -> 우리의 todo를 render 할 수 있게 됨
 function mapStateToProps(state, ownProps) {
-    return { toDos: state }
+    return { toDos: state, ownProps: ownProps }
 }
 
 // connect는 나의 components들을 store에 연결시켜준다.

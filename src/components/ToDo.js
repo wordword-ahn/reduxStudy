@@ -2,19 +2,26 @@ import React from "react"
 import { connect } from "react-redux";
 import { actionCreators } from "../store";
 import { Link } from "react-router-dom";
+import { ListItem, ListItemText } from "@material-ui/core";
+import List from '@material-ui/core/List';
+import Button from '@material-ui/core/Button';
 
 // Home.js에서 전달받은 인자: [text, id]
 function ToDo( { 이름, id, onBtnClick } ) {
         
     return (
-        <li>
+        <ListItem>
             {/* App.js에서 path가 [ /:id ] 형태일 경우 Detail.js 파일로 이동하도록 설정 -> 클릭시 이동 */}
+            {/* 
             <Link to={`/contacts/${id}`}>
                 {이름}
-            </Link>
+            </Link> */}
+            <ListItem button component={Link} to={`/contacts/${id}`}> {이름} </ListItem>
+            <Button onClick={onBtnClick} color="primary"> 삭제 </Button>
 
-            <button onClick={onBtnClick}> DEL </button>
-        </li>
+            {/* <button onClick={onBtnClick}> 삭제 </button> */}
+
+        </ListItem>
     );
 }
 

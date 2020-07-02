@@ -15,13 +15,17 @@ function SavePhone({ addToDo, movePage }) {
         function onChange2(e) { setText2(e.target.value) }
     */
 
-    // 수정
     const [inputs, setInputs] = useState({
         이름: "",
         휴대전화번호: "",
+        개인이메일주소: "",
     });
 
-    const { 이름, 휴대전화번호 } = inputs; // 비구조화 할당을 통해 값 추출
+    const { 
+        이름, 
+        휴대전화번호,
+        개인이메일주소
+    } = inputs; // 비구조화 할당을 통해 값 추출
 
     const onChange = (e) => {
         setInputs({
@@ -41,12 +45,13 @@ function SavePhone({ addToDo, movePage }) {
         }
 
         e.preventDefault();  
-        addToDo(이름, 휴대전화번호);
+        addToDo(이름, 휴대전화번호, 개인이메일주소);
 
         // 제출후 초기화
         setInputs({
             이름: "",
-            휴대전화번호: ""
+            휴대전화번호: "",
+            개인이메일주소: ""
         });
 
         // 히스토리: 제출 버튼 누른뒤 메인화면으로 페이지 이동되게 하려고 추가함
@@ -60,6 +65,7 @@ function SavePhone({ addToDo, movePage }) {
 
                 이름:       <input type="text" name="이름" value={이름} onChange={onChange} /> <br></br>
                 휴대전화번호: <input type="tel" name="휴대전화번호" value={휴대전화번호} onChange={onChange} /> <br></br>
+                개인이메일주소: <input type="email" name="개인이메일주소" value={개인이메일주소} onChange={onChange} /> <br></br>
 
                 <button> <Link to="/"> 취소 </Link> </button>
                 <button> 등록 </button>
@@ -76,7 +82,7 @@ function mapDispatchToProps(dispatch, ownProps) {
 
     return {
         // 아래의 값을 리턴한 뒤, 콘솔로그로 Home.js에 들어오는 addToDo를 확인해보면 addToDo라는 함수가 다시 들어온다.
-        addToDo: (이름, 휴대전화번호) => dispatch(actionCreators.addToDo(이름, 휴대전화번호)),  // dispatch를 호출 -> 그리고 dispatch는 store에서 만든 actionCreators를 호출 -> actionCreators 안에 있는 여러 action들 중에서 addToDo를 가져옴 -> addToDo는 텍스트를 인자로 받음
+        addToDo: (이름, 휴대전화번호, 개인이메일주소) => dispatch(actionCreators.addToDo(이름, 휴대전화번호, 개인이메일주소)),  // dispatch를 호출 -> 그리고 dispatch는 store에서 만든 actionCreators를 호출 -> actionCreators 안에 있는 여러 action들 중에서 addToDo를 가져옴 -> addToDo는 텍스트를 인자로 받음
         movePage: ownProps  // 제출후 페이지 이동시키려고 추가
     };
 }

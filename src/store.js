@@ -5,11 +5,12 @@ const DELETE = "DELETE";
 
 
 // 1. action creator
-const addToDo = (이름, 휴대전화번호) => {
+const addToDo = (이름, 휴대전화번호, 개인이메일주소) => {
     return {
         type: ADD,
         이름, 
-        휴대전화번호
+        휴대전화번호,
+        개인이메일주소
     }
 }
 
@@ -35,6 +36,7 @@ const reducer = (state = [], action) => {
                 { 
                     이름: action.이름, 
                     휴대전화번호: action.휴대전화번호,
+                    개인이메일주소: action.개인이메일주소,
                     id: Date.now()
                 }, ...state
             ];
