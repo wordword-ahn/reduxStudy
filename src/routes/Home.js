@@ -39,8 +39,8 @@ function Home({ toDos, addToDo, ownProps }) {
                                 />
                             </Grid>
                             <Grid item>
-                                <Button variant="outlined" color="primary">
-                                    <Link to="/enroll"> 연락처 등록 </Link>
+                                <Button variant="contained">
+                                    <Link to="/enroll" style={{ textDecoration: 'none', color: '#000' }}> 연락처 등록 </Link>
                                 </Button>
                                 <Tooltip title="Reload">
                                     <IconButton>

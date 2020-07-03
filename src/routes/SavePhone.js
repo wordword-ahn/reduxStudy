@@ -67,7 +67,8 @@ function SavePhone({ addToDo, movePage }) {
                 휴대전화번호: <input type="tel" name="휴대전화번호" value={휴대전화번호} onChange={onChange} /> <br></br>
                 개인이메일주소: <input type="text" name="개인이메일주소" value={개인이메일주소} onChange={onChange} /> <br></br>
 
-                <button> <Link to="/"> 취소 </Link> </button>
+                {/* textDecoration: 'none': 밑줄 제거 */}
+                <button> <Link to="/" style={{ textDecoration: 'none' }}> 취소 </Link> </button>
                 <button> 등록 </button>
             </form>
         </>)
