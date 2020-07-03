@@ -27,8 +27,9 @@ function Detail({ information, addToDo }) {
 
 
             <div>
+                {/* 위에서 버튼을 누르면 "수정하기"라는 테이블을 보여준다 */}
                 <input type="submit" value="수정하기 버튼" onClick={onClick} />
-                {showResults ? <DetailModified /> : null}  {/* 위에서 버튼을 누르면 "수정하기"라는 테이블을 보여준다 */}
+                {showResults ? <DetailModified currentID = { information && information.id ? information.id : "" } /> : null}  {/* currentID 전달 */}
             </div>
         </>
     )
