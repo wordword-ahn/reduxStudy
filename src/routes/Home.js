@@ -1,7 +1,6 @@
 // App.js -> Home.js (주소에 아무 path도 주어지지 않았을 때 기본적으로 보여주는 라우터)
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { actionCreators } from "../store";
 import ToDo from "../components/ToDo"
 import { Link } from "react-router-dom";
 
