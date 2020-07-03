@@ -133,10 +133,10 @@ index.html
 # 2. 순수 자바스크립트와 리액트의 리덕스 차이
 
 ### subcribe
-리액트로 변환하기 전 소스코드에서는 subscribe를 썼었다.
+리액트로 변환하기 전 소스코드에서는 subscribe를 썼었다.     
 여기서 subscribe란, store에 변화가 생기면 발동되는 함수다.
 
-그런데 react는 변화가 일어나는 구간만 다시 render하는 특성이 있다.
+그런데 react는 변화가 일어나는 구간만 다시 render하는 특성이 있다.      
 따라서 subscribe를 사용하지 않고 그냥 전체를 Provider로 감싸는 처리를 한다.
 
     yarn add react-redux react-router-dom
@@ -391,7 +391,7 @@ mapStateToProps 함수 안에서 state 값을 콘솔로그로 찍어보면,
     }
 
 
-store는 변화가 있을 때마다 Home.js에 addToDo라는 함수를 준다.
+store는 변화가 있을 때마다 Home.js에 addToDo라는 함수를 준다.       
 그러면 Home.js는 자기가 받은 addToDo 함수를 이렇게 사용할 수 있다.
 
     // 버튼 누르면 이게 발동
