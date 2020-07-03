@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { actionCreators } from "../store";
-import { Link } from "react-router-dom";
+
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 // movePage: 제출 버튼 누른뒤 메인화면으로 페이지 이동되게 하려고 추가함
 function SavePhone({ addToDo, movePage }) {
@@ -60,16 +62,14 @@ function SavePhone({ addToDo, movePage }) {
 
     return (
         <>
-            <h1> 기본정보 </h1>
+            <h1> 신규등록 </h1>
             <form onSubmit={onSubmit}>
 
-                이름:       <input type="text" name="이름" value={이름} onChange={onChange} /> <br></br>
-                휴대전화번호: <input type="tel" name="휴대전화번호" value={휴대전화번호} onChange={onChange} /> <br></br>
-                개인이메일주소: <input type="text" name="개인이메일주소" value={개인이메일주소} onChange={onChange} /> <br></br>
+                <TextField id="outlined-search" variant="filled" label="이름" name="이름" value={이름} onChange={onChange} /> <br />
+                <TextField id="outlined-search" variant="filled" label="휴대전화번호" name="휴대전화번호" value={휴대전화번호} onChange={onChange} /> <br />
+                <TextField id="outlined-search" variant="filled" label="개인이메일주소" name="개인이메일주소" value={개인이메일주소} onChange={onChange} /> <br /> <br />
+                <Button type="submit" variant="contained" color="primary"> 등록 </Button>
 
-                {/* textDecoration: 'none': 밑줄 제거 */}
-                <button> <Link to="/" style={{ textDecoration: 'none' }}> 취소 </Link> </button>
-                <button> 등록 </button>
             </form>
         </>)
 }

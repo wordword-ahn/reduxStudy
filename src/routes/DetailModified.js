@@ -3,7 +3,6 @@ import { actionCreators } from "../store";
 import { connect } from "react-redux";
 
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
 // 두번째 컴포넌트 (첫번째 컴포넌트에서 버튼을 누르면 이 컴포넌트가 뿅 나타난다)
@@ -69,17 +68,10 @@ const Results = ({ modifiedAction, currentID, state }) => {
             <h1> 정보 수정하기 </h1> <hr></hr>
             <form onSubmit={onSubmit}>
 
-                <TextField id="outlined-search" variant="outlined" label="이름" name="이름" value={이름} onChange={onChange} /> <br/><br/>
-                <TextField id="outlined-search" variant="outlined" label="휴대전화번호" name="휴대전화번호" value={휴대전화번호} onChange={onChange} /> <br/><br/>
-                <TextField id="outlined-search" variant="outlined" label="개인이메일주소" name="개인이메일주소" value={개인이메일주소} onChange={onChange} /> <br/>
-
-<br></br>
-                {/* 이름:       <input type="text" name="이름" value={이름} onChange={onChange} /> <br></br>
-                휴대전화번호: <input type="tel" name="휴대전화번호" value={휴대전화번호} onChange={onChange} /> <br></br>
-                개인이메일주소: <input type="text" name="개인이메일주소" value={개인이메일주소} onChange={onChange} /> <br></br> */}
-
+                <TextField id="outlined-search" variant="filled" label="이름" name="이름" value={이름} onChange={onChange} /> <br/>
+                <TextField id="outlined-search" variant="filled" label="휴대전화번호" name="휴대전화번호" value={휴대전화번호} onChange={onChange} /> <br/>
+                <TextField id="outlined-search" variant="filled" label="개인이메일주소" name="개인이메일주소" value={개인이메일주소} onChange={onChange} /> <br/> <br/>
                 <Button type="submit" variant="contained" color="primary"> 수정 완료 </Button>
-
 
             </form>
 
