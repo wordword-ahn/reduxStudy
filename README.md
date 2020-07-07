@@ -1,3 +1,9 @@
+# HOC 방식의 리덕스 프로젝트
+- 다른 방식은 여기로 (HOOK으로 스토어 연결)
+https://github.com/Word-Word/second_redux
+
+<br>
+
 # 요약
   1. store : 나의 data를 넣을 수 있는 장소
   2. reducer : '유일하게' data를 바꾸고 수정할 수 있는 함수. 들어온 action에 따라 값을 변경한다.
