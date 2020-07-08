@@ -1,5 +1,7 @@
 // App.js -> Home.js (주소에 아무 path도 주어지지 않았을 때 기본적으로 보여주는 라우터)
-import React, { useState } from "react";
+// import React, { useState } from "react";  // 함수형에서 hook을 쓰는 경우
+import React, { Component } from 'react';    // 클래스형으로 변환!!
+
 import { connect } from "react-redux";
 import ToDo from "../components/ToDo"
 import { Link } from "react-router-dom";
@@ -15,58 +17,75 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 
 
-function Home({ toDos, addToDo, ownProps }) {    
+// function Home({ toDos }) {    // 기존에 썼던 함수형 방식
+class Home extends Component {
 
-    // 사용자가 입력한 텍스트로 변경
-    const [searchText, setText] = useState("");  // Hook: 함수 컴포넌트는 "state가 없는 컴포넌트"지만, Hook을 통해 [React state]를 함수 안에서 사용할 수 있게 해줌 (초기값: "")
-    function onChange(e) {
-        setText(e.target.value);
+    // [클래스형으로 변환]
+    state = {
+        searchText: ""
     }
 
-    return (
-        <>
-            <h1> 전체 연락처 {toDos.length} </h1>
-            <Paper className={"App-paper-1"}>
-                <AppBar className={"App-searchBar-2"} position="static" color="default" elevation={0}>
-                    <Toolbar>
-                        <Grid container spacing={2} alignItems="center">
-                            <Grid item>
-                            </Grid>
-                            <Grid item xs>
-                                <TextField
-                                    fullWidth
-                                    value={searchText} onChange={onChange} placeholder="연락처 검색: "
-                                />
-                            </Grid>
-                            <Grid item>
-                                <Button variant="contained">
-                                    <Link to="/enroll" style={{ textDecoration: 'none', color: '#000' }}> 연락처 등록 </Link>
-                                </Button>
-                                <Tooltip title="Reload">
-                                    <IconButton>
-                                    </IconButton>
-                                </Tooltip>
-                            </Grid>
-                        </Grid>
-                    </Toolbar>
-                </AppBar>
-                <div className={"App-contentWrapper-6"}>
-                    <Typography color="textSecondary" align="center">
-                        {
-                            toDos
-                                .filter(toDos => toDos.이름.indexOf(searchText) > -1)  // 검색 기능 구현 (참고자료: https://ndb796.tistory.com/254)
-                                .map(toDo => (
-                                    <ToDo
-                                        {...toDo}  // toDos는 store에서 ADD라는 action에 의해 생성될 때 각 요소들이 각각 [text]와 [id]를 갖는다. 따라서 map 함수가 모든 요소들을 1개씩 방문할 때마다 ToDo.js에는 각각의 text와 id가 전달된다.
-                                        key={toDo.id}
-                                    />
-                                ))
-                        }
-                    </Typography>
-                </div>
-            </Paper>
+    onChange = (e) => {
+        this.setState({
+            searchText: e.target.value
+        })
+    }
 
-{/* 
+    // [만약 함수형일 경우 이걸 사용함] 사용자가 입력한 텍스트로 변경
+    // const [searchText, setText] = useState("");  // Hook: 함수 컴포넌트는 "state가 없는 컴포넌트"지만, Hook을 통해 [React state]를 함수 안에서 사용할 수 있게 해줌 (초기값: "")
+    // function onChange(e) {
+    //     setText(e.target.value);
+    // }
+    
+
+    // [클래스형으로 변환]
+    render() {
+        const { toDos } = this.props;
+
+        return (
+            <>
+                <h1> 전체 연락처 {toDos.length} </h1>
+                <Paper className={"App-paper-1"}>
+                    <AppBar className={"App-searchBar-2"} position="static" color="default" elevation={0}>
+                        <Toolbar>
+                            <Grid container spacing={2} alignItems="center">
+                                <Grid item>
+                                </Grid>
+                                <Grid item xs>
+                                    <TextField
+                                        fullWidth
+                                        value={this.state.searchText} onChange={this.onChange} placeholder="연락처 검색: "
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <Button variant="contained">
+                                        <Link to="/enroll" style={{ textDecoration: 'none', color: '#000' }}> 연락처 등록 </Link>
+                                    </Button>
+                                    <Tooltip title="Reload">
+                                        <IconButton>
+                                        </IconButton>
+                                    </Tooltip>
+                                </Grid>
+                            </Grid>
+                        </Toolbar>
+                    </AppBar>
+                    <div className={"App-contentWrapper-6"}>
+                        <Typography color="textSecondary" align="center">
+                            {
+                                toDos
+                                    .filter(toDos => toDos.이름.indexOf(this.state.searchText) > -1)  // 검색 기능 구현 (참고자료: https://ndb796.tistory.com/254)
+                                    .map(toDo => (
+                                        <ToDo
+                                            {...toDo}  // toDos는 store에서 ADD라는 action에 의해 생성될 때 각 요소들이 각각 [text]와 [id]를 갖는다. 따라서 map 함수가 모든 요소들을 1개씩 방문할 때마다 ToDo.js에는 각각의 text와 id가 전달된다.
+                                            key={toDo.id}
+                                        />
+                                    ))
+                            }
+                        </Typography>
+                    </div>
+                </Paper>
+
+                {/* 
             <button>
                 <Link to="/enroll"> 연락처 등록 </Link>
             </button>
@@ -87,10 +106,10 @@ function Home({ toDos, addToDo, ownProps }) {
             </ul>
  */}
 
-        </>
-    );
+            </>
+        );
+    }
 }
-
 
 
 

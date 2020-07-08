@@ -1,4 +1,5 @@
-import React from "react";
+// import React from "react";  // 함수형일 경우
+import React, { Component } from 'react';    // 클래스형으로 변환!!
 import { connect } from "react-redux";
 import DetailModified from "./DetailModified"
 
@@ -10,13 +11,28 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
-function Detail({ information, addToDo }) {
+// function Detail({ information }) {  // 기존에 썼던 함수형 방식
+    class Detail extends Component {
+
+        // [클래스형으로 변환]
+        state = {
+            showResults: false
+        }
+
+        onClick = () => this.setState({ showResults: true });
+
+
+        
+    // [기존 함수형에서 쓰던 코드]
 
     // 두번째 컴포넌트 보여주기 (첫번째 컴포넌트에서 버튼을 누를때만 발동) 
     // https://stackoverflow.com/questions/24502898/show-or-hide-element-in-react
-    const [showResults, setShowResults] = React.useState(false);
-    const onClick = () => setShowResults(true);
+    // const [showResults, setShowResults] = React.useState(false);
+    // const onClick = () => setShowResults(true);
 
+    // [클래스형으로 변환]
+    render() {
+        const { information } = this.props;
 
     return (
         <>
@@ -45,7 +61,7 @@ function Detail({ information, addToDo }) {
             </TableContainer>
             
             <br/>
-            <Button variant="contained" color="primary" onClick={onClick}>
+            <Button variant="contained" color="primary" onClick={this.onClick}>
                 정보 수정
             </Button>
             <br/><br/><br/><br/>
@@ -53,12 +69,12 @@ function Detail({ information, addToDo }) {
 
             <div>
                 {/* 위에서 버튼을 누르면 두번째 컴포넌트를 보여준다 */}
-                {showResults ? <DetailModified currentID={information && information.id ? information.id : ""} /> : null}  {/* currentID 전달 */}
+                {this.state.showResults ? <DetailModified currentID={information && information.id ? information.id : ""} /> : null}  {/* currentID 전달 */}
             </div>
         </>
     )
 }
-
+    }
 
 
 // get
