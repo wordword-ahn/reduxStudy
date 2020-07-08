@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 // movePage: 제출 버튼 누른뒤 메인화면으로 페이지 이동되게 하려고 추가함
-// function SavePhone({ addToDo, movePage }) {
+// function SavePhone({ addToDo, movePage }) {    // 함수형 컴포넌트를 클래스형으로 변환함
 class SavePhone extends Component {
 
 
@@ -108,7 +108,6 @@ class SavePhone extends Component {
 
     // [클래스형으로 변환]
     render() {
-        const { addToDo, movePageos } = this.props;
 
         return (
             <>
